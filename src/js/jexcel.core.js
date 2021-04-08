@@ -4724,11 +4724,13 @@ var jexcel = (function(el, options) {
         }
     }
 
+    obj.hiddenRows = new Set();
     /**
      * Show row
      */
     obj.showRow = function(rowNumber) {
         obj.rows[rowNumber].style.display = '';
+        obj.hiddenRows.delete(rowNumber);
     }
 
     /**
@@ -4736,6 +4738,7 @@ var jexcel = (function(el, options) {
      */
     obj.hideRow = function(rowNumber) {
         obj.rows[rowNumber].style.display = 'none';
+        obj.hiddenRows.add(rowNumber);
     }
 
     /**
@@ -5981,6 +5984,7 @@ var jexcel = (function(el, options) {
 
         // Go through the columns to get the data
         for (var j = 0; j < y; j++) {
+            if (obj.hiddenRows.has(j)) continue;
             col = [];
             colLabel = [];
 

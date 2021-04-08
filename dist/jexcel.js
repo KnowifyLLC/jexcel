@@ -4767,11 +4767,13 @@
             }
         }
 
+        obj.hiddenRows = new Set();
         /**
          * Show row
          */
         obj.showRow = function(rowNumber) {
             obj.rows[rowNumber].style.display = '';
+            obj.hiddenRows.delete(rowNumber);
         }
 
         /**
@@ -4779,6 +4781,7 @@
          */
         obj.hideRow = function(rowNumber) {
             obj.rows[rowNumber].style.display = 'none';
+            obj.hiddenRows.add(rowNumber);
         }
 
         /**
@@ -6024,6 +6027,7 @@
     
             // Go through the columns to get the data
             for (var j = 0; j < y; j++) {
+                if (obj.hiddenRows.has(j)) continue;
                 col = [];
                 colLabel = [];
     
